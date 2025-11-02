@@ -1,6 +1,6 @@
 // api= https://api.artic.edu/api/v1/artworks?page=1
 
-import { useState, useEffect, useRef, use } from "react";
+import { useState, useEffect, useRef } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 
