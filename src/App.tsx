@@ -1,4 +1,3 @@
-// api= https://api.artic.edu/api/v1/artworks?page=1
 
 import { useState, useEffect, useRef } from "react";
 import { DataTable } from "primereact/datatable";
@@ -24,6 +23,8 @@ interface Product {
 }
 
 export default function CheckboxRowSelectionDemo() {
+  const apiUrl = import.meta.env.VITE_API_URL;
+  console.log("API URL: ", apiUrl);
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
   const op = useRef<OverlayPanel>(null);
@@ -46,9 +47,15 @@ export default function CheckboxRowSelectionDemo() {
     setSelectedProducts([...productsToSelect]);
   };
 
+  const HandleRowCounter = () => {
+    HandleRowCount();
+    setPage(1);
+    op.current?.hide();
+  };
+
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(` https://api.artic.edu/api/v1/artworks?page=${page}`);
+      const response = await fetch(`${apiUrl}?page=${page}`);
       const data = await response.json();
       // console.log(data);
       const Products: Product[] = data.data.map((item: any) => ({
@@ -165,7 +172,7 @@ export default function CheckboxRowSelectionDemo() {
             onChange={(e) => setRowCount(Number(e.target.value))}
             className="p-inputtext p-component w-full"
           />
-          <Button label="Select Rows" onClick={HandleRowCount} />
+          <Button label="Select Rows" onClick={HandleRowCounter} />
         </div>
       </OverlayPanel>
 
